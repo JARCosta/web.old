@@ -3,7 +3,7 @@ from flask import render_template
 import requests
 
 import server
-from utils.headers import HEADERS
+from utils import HEADERS
 
 def test(steamid: str):
 #    return str(server.get_users())

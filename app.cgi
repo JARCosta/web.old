@@ -9,18 +9,6 @@ import psycopg2.extras
 import root
 import inventory
 
-## SGBD configs
-DB_HOST = "db.tecnico.ulisboa.pt"
-DB_USER = "istnumber"
-DB_DATABASE = DB_USER
-DB_PASSWORD = "password"
-DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (
-    DB_HOST,
-    DB_DATABASE,
-    DB_USER,
-    DB_PASSWORD,
-)
-
 app = Flask(__name__)
 
 @app.route("/")
