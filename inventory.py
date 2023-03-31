@@ -2,7 +2,7 @@ import json
 from flask import render_template
 import requests
 
-import server
+# import server
 from utils import HEADERS
 
 def test(steamid: str):
