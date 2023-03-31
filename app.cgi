@@ -28,7 +28,7 @@ def root_display():
     return root.display()
 
 @app.route("/inventory", methods=["GET"])
-def inventory():
+def inventory_display():
     steamid = request.args.get('steamid') or None
     return inventory.display(steamid)
 
