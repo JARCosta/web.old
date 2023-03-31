@@ -7,6 +7,7 @@ from flask import render_template, request
 import psycopg2
 import psycopg2.extras
 import root
+import inventory
 
 ## SGBD configs
 DB_HOST = "db.tecnico.ulisboa.pt"
@@ -29,5 +30,9 @@ def root_display():
     except Exception as e:
         return str(e)  # Renders a page with the error.
 
+@app.route("/inventory", methods=["GET"])
+def inventory():
+    steamid = request.args.get('steamid') or None
+    return inventory.display(steamid)
 
 CGIHandler().run(app)
