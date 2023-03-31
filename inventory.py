@@ -6,7 +6,11 @@ import server
 from utils.headers import HEADERS
 
 def test(steamid: str):
-    return steamid
+#    return str(server.get_users())
+    return "aaa"
+#    if not steamid:
+#        data = [{"name": user["name"],"steamid": user["steamid"]} for user in server.get_users()]
+#    return render_template("steamids.html", title="Inventory", cursor=data)
 
 def display(steamid: str):
     if not steamid:
