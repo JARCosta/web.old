@@ -25,10 +25,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def root_display():
-    try:
-        return root.display()
-    except Exception as e:
-        return str(e)  # Renders a page with the error.
+    return root.display()
 
 @app.route("/inventory", methods=["GET"])
 def inventory():
