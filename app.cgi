@@ -4,10 +4,12 @@ from wsgiref.handlers import CGIHandler
 from flask import Flask
 from flask import render_template, request
 
+
 import psycopg2
 import psycopg2.extras
 import root
 import inventory
+import serverTest
 
 app = Flask(__name__)
 

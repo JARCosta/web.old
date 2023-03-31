@@ -2,15 +2,37 @@ import json
 from flask import render_template
 import requests
 
-# import server
+import serverTest
 from utils import HEADERS
 
 def test(steamid: str):
-#    return str(server.get_users())
-    return "aaa"
-#    if not steamid:
-#        data = [{"name": user["name"],"steamid": user["steamid"]} for user in server.get_users()]
-#    return render_template("steamids.html", title="Inventory", cursor=data)
+    if not steamid:
+        data = [{"name": user["name"],"steamid": user["steamid"]} for user in serverTest.get_users()]
+        return render_template("steamids.html", title="Inventory", cursor=data)
+    else:
+        data = []
+	return "aaa"
+        for i in serverTest.get_inventory(steamid):
+            temp = i
+            temp["total price"] = round( i["quantity"] * i["price"] ,2)
+            data.append(temp)
+        data.sort(key=lambda x: x['total price'])
+        data.reverse()
+
+        total_items = 0
+        total_price = 0
+        for i in data:
+            total_items += i["quantity"]
+            total_price += i["total price"]
+        if total_items > 0:
+            average_price = total_price/total_items
+        else:
+            average_price = 0
+        new_data = [{"name":"Total","quantity":total_items,"price":round(average_price,2),"total price":round(total_price,2)}]
+        new_data.extend(data)
+        data = new_data
+        print(data)
+        return render_template("inventory/inventory.html", title="Inventory", cursor=data)
 
 def display(steamid: str):
     if not steamid:
