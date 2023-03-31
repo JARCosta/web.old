@@ -11,7 +11,7 @@ def test(steamid: str):
         return render_template("steamids.html", title="Inventory", cursor=data)
     else:
         data = []
-	return "aaa"
+        return str(serverTest.get_inventory(steamid))
         for i in serverTest.get_inventory(steamid):
             temp = i
             temp["total price"] = round( i["quantity"] * i["price"] ,2)

@@ -25,5 +25,26 @@ def get_users():
         dbConn.close()
 
 def get_inventory(steamid: str):
-    return [{"name":i[0],"quantity":i[1],"price":i[2]} for i in database.get_inventory(steamid)]
+    return [{"name":i[0],"quantity":i[1],"price":i[2]} for i in database_get_inventory(steamid)]
+
+def database_get_inventory(steamid: str):
+    try:
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
+        querry = f"""
+            SELECT ip.item, quantity, price
+            FROM item_prices ip
+            JOIN (
+            SELECT item, MAX(date) AS max_date
+            FROM item_prices
+            GROUP BY item
+            ) latest ON ip.item = latest.item AND ip.date = latest.max_date
+            JOIN profile_items ON profile_items.item = ip.item
+            WHERE profile = '{steamid}';
+            """
+        cursor.execute(querry)
+        return cursor.fetchall()
+    finally:
+        cursor.close()
+        dbConn.close()
 
