@@ -30,6 +30,6 @@ def root_display():
 @app.route("/inventory", methods=["GET"])
 def inventory_display():
     steamid = request.args.get('steamid') or None
-    return inventory.display(steamid)
+    return inventory.test(steamid)
 
 CGIHandler().run(app)

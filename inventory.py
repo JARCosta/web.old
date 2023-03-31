@@ -5,6 +5,8 @@ import requests
 import server
 from utils.headers import HEADERS
 
+def test(steamid: str):
+    return steamid
 
 def display(steamid: str):
     if not steamid:
