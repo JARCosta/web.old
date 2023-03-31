@@ -6,6 +6,7 @@ from flask import render_template, request
 
 import psycopg2
 import psycopg2.extras
+import root
 
 ## SGBD configs
 DB_HOST = "db.tecnico.ulisboa.pt"
@@ -22,9 +23,9 @@ DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (
 app = Flask(__name__)
 
 @app.route("/")
-def root():
+def root_display():
     try:
-        return render_template("test.html")
+        return root.display()
     except Exception as e:
         return str(e)  # Renders a page with the error.
 
