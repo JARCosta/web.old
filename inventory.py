@@ -34,7 +34,7 @@ def display(steamid: str):
         new_data.extend(data)
         data = new_data
         print(data)
-        return render_template("inventory/inventory.html", title="Inventory", cursor=data)
+        return render_template("inventory.html", title="Inventory", cursor=data)
 
 
 def update(steamid, js):
