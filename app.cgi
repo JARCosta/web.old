@@ -24,7 +24,7 @@ app = Flask(__name__)
 @app.route("/")
 def root():
     try:
-        return render_template("root.html")
+        return render_template("test.html")
     except Exception as e:
         return str(e)  # Renders a page with the error.
 
