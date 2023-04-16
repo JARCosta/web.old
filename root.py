@@ -6,4 +6,4 @@ import serverTest
 
 
 def display():
-    return render_template("test.html", title="Hellow")
+    return render_template("root.html", title="Hellow")
