@@ -22,4 +22,12 @@ def inventory_display():
     steamid = request.args.get('steamid') or None
     return inventory.test(steamid)
 
+@app.route("/inventory_update", methods=['POST'])
+def inv_update():
+    steamid = request.form["steamid"]
+    json = request.form["json"] or None
+    return render_template("redirect_to_root.html", title="Update Prices")
+    return inventory.update(steamid, json)
+
+
 CGIHandler().run(app)
