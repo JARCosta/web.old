@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-from alive_progress import alive_bar
 from time import sleep
 from flask import render_template
 
@@ -40,10 +39,7 @@ def add_item_price(item_name: str):
             break
         except (TypeError,KeyError) as e:
             print(e, "at", item_name, "\n", price_url)
-            with alive_bar(600) as bar:
-                for _ in range(600):
-                    sleep(0.1)
-                    bar()
+            sleep(60)
     time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     database.add_item_price(item_name, price, time)
 

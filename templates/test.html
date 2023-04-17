@@ -1,0 +1,35 @@
+<head>
+    <title>{{ title }} - csDB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"> -->
+    <!-- TODO:add logo -->
+    <link rel="shortcut icon" href="https://www.nba.com/favicon-32x32.png" type="image/png">
+
+</head>
+
+<body>
+    <div id="background" >
+        <div class="overlay"></div>
+    </div>
+    <div class="App-header">
+        <!-- TODO: add logo -->
+        <a href={{homeURL}} style="color: #fff;"><h1>csDB</h1></a>
+    </div>
+    <div class="App-body">
+        <table>
+            {% for line in cursor %}
+                <tr>
+                    {% for element in line%}
+                        <td>
+                            {{element}}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+    
+</html>

@@ -12,6 +12,7 @@ import inventory
 import serverTest
 import utils
 import prices
+import database
 
 app = Flask(__name__)
 
@@ -37,6 +38,20 @@ def inv_update():
 def prices_display():
     try:
         return prices.display()
+    except Exception as e:
+        return str(e)
+
+@app.route("/prices/update")
+def prices_update():
+    try:
+        return prices.update()
+    except Exception as e:
+        return str(e)
+
+@app.route("/database")
+def database_display():
+    try:
+        return render_template("test.html", cursor=database.display(), title="Database", homeURL=utils.HOME_URL)
     except Exception as e:
         return str(e)
 
