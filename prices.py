@@ -1,11 +1,14 @@
 
 from flask import render_template
 
-import server
+import database
+import utils
 
+def get_latest_prices():
+    return [{"name":i[2],"quantity":i[1],"price":i[0], "total price":round(float(i[1])*float(i[0]),2)} for i in database.get_latest_prices()]
 
 def display():
-    data = server.get_latest_prices()
+    data = get_latest_prices()
     total_items = 0
     total_price = 0
     for i in data:
@@ -15,15 +18,33 @@ def display():
         average_price = total_price/total_items
     else:
         average_price = 0
-    
+
     new_data = [{"name":"Total","quantity":total_items,"price":round(average_price,2),"total price":round(total_price,2)}]
     new_data.extend(data)
     data = new_data
-    return render_template("prices/prices.html", title="Prices", cursor=data, homeURL=server.HOME_URL)
+    return render_template("prices.html", title="Prices", cursor=data, homeURL=utils.HOME_URL)
 
+def get_item_list():
+    return [{"name":i[0],"type":i[1]} for i in database.get_item_list()]
+
+def add_item_price(item_name: str):
+    price_url = f'https://steamcommunity.com/market/priceoverview/?currency=3&appid=730&market_hash_name={item_name}'
+    while True:
+        try:
+            response = requests.get(price_url, headers=HEADERS)
+            price = float(json.loads(response.content)['lowest_price'][:-1].replace(",","."))
+            break
+        except (TypeError,KeyError) as e:
+            print(e, "at", item_name, "\n", price_url)
+            with alive_bar(600) as bar:
+                for _ in range(600):
+                    sleep(0.1)
+                    bar()
+    time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    database.add_item_price(item_name, price, time)
 
 def update():
-    items = server.get_item_list()
+    items = get_item_list()
     for i in items:
-        server.add_item_price(i["name"])
-    return render_template("redirect_to_root.html", title="Update Prices", homeURL=server.HOME_URL)
+        add_item_price(i["name"])
+    return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)

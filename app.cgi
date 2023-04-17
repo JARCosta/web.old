@@ -11,6 +11,7 @@ import root
 import inventory
 import serverTest
 import utils
+import prices
 
 app = Flask(__name__)
 
@@ -25,10 +26,18 @@ def inventory_display():
 
 @app.route("/inventory_update", methods=['POST'])
 def inv_update():
-    steamid = request.form["steamid"]
-    json = request.form["json"] or None
-    #return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)
-    return inventory.update(steamid, json)
+    try:
+        steamid = request.form["steamid"]
+        json = request.form["json"] or None
+        return inventory.update(steamid, json)
+    except Exception as e:
+        return str(e)
 
+@app.route("/prices")
+def prices_display():
+    try:
+        return prices.display()
+    except Exception as e:
+        return str(e)
 
 CGIHandler().run(app)
