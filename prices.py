@@ -19,11 +19,11 @@ def display():
     new_data = [{"name":"Total","quantity":total_items,"price":round(average_price,2),"total price":round(total_price,2)}]
     new_data.extend(data)
     data = new_data
-    return render_template("prices/prices.html", title="Prices", cursor=data)
+    return render_template("prices/prices.html", title="Prices", cursor=data, homeURL=server.HOME_URL)
 
 
 def update():
     items = server.get_item_list()
     for i in items:
         server.add_item_price(i["name"])
-    return render_template("redirect_to_root.html", title="Update Prices")
+    return render_template("redirect_to_root.html", title="Update Prices", homeURL=server.HOME_URL)

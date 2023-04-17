@@ -3,12 +3,12 @@ from flask import render_template
 import requests
 
 import serverTest
-from utils import HEADERS
+import utils
 
 def test(steamid: str):
     if not steamid:
         data = [{"name": user["name"],"steamid": user["steamid"]} for user in serverTest.get_users()]
-        return render_template("steamids.html", title="Inventory", cursor=data)
+        return render_template("steamids.html", title="Inventory", cursor=data, homeURL=utils.HOME_URL)
     else:
         data = []
         for i in serverTest.get_inventory(steamid):
@@ -31,12 +31,12 @@ def test(steamid: str):
         new_data.extend(data)
         data = new_data
         print(data)
-        return render_template("inventory.html", title="Inventory", cursor=data)
+        return render_template("inventory.html", title="Inventory", cursor=data, homeURL=utils.HOME_URL)
 
 def display(steamid: str):
     if not steamid:
         data = [{"name": user["name"],"steamid": user["steamid"]} for user in server.get_users()]
-        return render_template("inventory/steamids.html", title="Inventory", cursor=data)
+        return render_template("inventory/steamids.html", title="Inventory", cursor=data, homeURL=utils.HOME_URL)
     else:
         data = []
         for i in server.get_inventory(steamid):
@@ -59,13 +59,13 @@ def display(steamid: str):
         new_data.extend(data)
         data = new_data
         print(data)
-        return render_template("inventory.html", title="Inventory", cursor=data)
+        return render_template("inventory.html", title="Inventory", cursor=data, homeURL=utils.HOME_URL)
 
 
 def update(steamid, js):
     if js == None:
         inventory_url = f"https://steamcommunity.com/profiles/{steamid}/inventory/json/730/2"
-        js = requests.get(inventory_url, headers=HEADERS).content
+        js = requests.get(inventory_url, headers=utils.HEADERS).content
 
     content = json.loads(js)
     inventory, descriptions = content['rgInventory'], content['rgDescriptions']
@@ -76,7 +76,7 @@ def update(steamid, js):
     server.set_inventory(steamid, inv)
     # inventoryImpl.save_inv(steamid, inv)
 
-    return render_template("redirect_to_root.html", title="Update Prices")
+    return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)
 
 
 def json_to_inv(inventory: dict, descriptions: dict):
