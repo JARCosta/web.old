@@ -30,7 +30,7 @@ def display():
 def get_item_list():
     return [{"name":i[0],"type":i[1]} for i in database.get_item_list()]
 
-def add_item_price(item_name: str):
+def add_item_price(item_name: str, time: datetime):
     price_url = f'https://steamcommunity.com/market/priceoverview/?currency=3&appid=730&market_hash_name={item_name}'
     while True:
         try:
@@ -39,12 +39,12 @@ def add_item_price(item_name: str):
             break
         except (TypeError,KeyError) as e:
             print(e, "at", item_name, "\n", price_url)
-            sleep(60)
-    time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            sleep(60))
     database.add_item_price(item_name, price, time)
 
 def update():
     items = get_item_list()
+    time = datetime.now().strftime("%H:%M %d-%m-%y")
     for i in items:
-        add_item_price(i["name"])
+        add_item_price(i["name"], time)
     return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)
