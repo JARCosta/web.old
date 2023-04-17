@@ -4,6 +4,7 @@ import requests
 
 import serverTest
 import utils
+import database
 
 def test(steamid: str):
     if not steamid:
@@ -69,11 +70,11 @@ def update(steamid, js):
 
     content = json.loads(js)
     inventory, descriptions = content['rgInventory'], content['rgDescriptions']
-    
+
     inv = json_to_inv(inventory, descriptions)
     # for i in inv:
     #     print(i, inv[i])
-    server.set_inventory(steamid, inv)
+    database.set_inventory(steamid, inv)
     # inventoryImpl.save_inv(steamid, inv)
 
     return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)

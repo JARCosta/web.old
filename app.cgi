@@ -27,7 +27,7 @@ def inventory_display():
 def inv_update():
     steamid = request.form["steamid"]
     json = request.form["json"] or None
-    return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)
+    #return render_template("redirect_to_root.html", title="Update Prices", homeURL=utils.HOME_URL)
     return inventory.update(steamid, json)
 
 
