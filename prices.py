@@ -1,6 +1,10 @@
-
+from datetime import datetime
+import json
+from alive_progress import alive_bar
+from time import sleep
 from flask import render_template
 
+import requests
 import database
 import utils
 
@@ -31,7 +35,7 @@ def add_item_price(item_name: str):
     price_url = f'https://steamcommunity.com/market/priceoverview/?currency=3&appid=730&market_hash_name={item_name}'
     while True:
         try:
-            response = requests.get(price_url, headers=HEADERS)
+            response = requests.get(price_url, headers=utils.HEADERS)
             price = float(json.loads(response.content)['lowest_price'][:-1].replace(",","."))
             break
         except (TypeError,KeyError) as e:

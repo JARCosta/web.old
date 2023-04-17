@@ -24,7 +24,7 @@ def inventory_display():
     steamid = request.args.get('steamid') or None
     return inventory.test(steamid)
 
-@app.route("/inventory_update", methods=['POST'])
+@app.route("/inventory/update", methods=['POST'])
 def inv_update():
     try:
         steamid = request.form["steamid"]
